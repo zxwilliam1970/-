@@ -1,0 +1,102 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>楓之谷補水效率助手（Artale版）</title>
+    <style>
+        body {
+            font-family: sans-serif;
+            padding: 2em;
+            background-color: #f9f9f9;
+            line-height: 1.6;
+        }
+        h1 {
+            color: #e85a4f;
+        }
+        .section {
+            background: #ffffff;
+            padding: 1em 2em;
+            margin-bottom: 2em;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        label {
+            display: block;
+            margin-top: 1em;
+        }
+        input {
+            padding: 0.4em;
+            width: 100%;
+            max-width: 400px;
+        }
+        button {
+            margin-top: 1.5em;
+            padding: 0.6em 1.2em;
+            background-color: #e85a4f;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+        .result {
+            margin-top: 2em;
+            padding: 1em;
+            background: #eef9f2;
+            border-left: 4px solid #3cb371;
+        }
+    </style>
+</head>
+<body>
+    <h1>楓之谷補水效率助手（Artale版）</h1>
+    <div class="section">
+        <label for="hp">最大 HP：</label>
+        <input type="number" id="hp" placeholder="例如 3000">
+        <label for="mp">最大 MP：</label>
+        <input type="number" id="mp" placeholder="例如 7000">
+        <label for="magicGuardLevel">魔心技能等級（1-20）：</label>
+        <input type="number" id="magicGuardLevel" min="1" max="20">
+        <label for="magicShieldLevel">魔力之盾技能等級（1-20）：</label>
+        <input type="number" id="magicShieldLevel" min="1" max="20">
+        <button onclick="calculate()">計算補水效率</button>
+    </div>
+    <div id="result" class="result" style="display:none;"></div>
+
+    <script>
+        const magicGuardRates = [
+            0, 0.04, 0.08, 0.12, 0.16, 0.20, 0.24, 0.28, 0.32, 0.36,
+            0.40, 0.44, 0.48, 0.52, 0.56, 0.60, 0.64, 0.68, 0.72, 0.76, 0.80
+        ];
+        const magicShieldMP = [
+            0, 8,8,8,8,8,8,8,8,8,8,16,16,16,16,16,16,16,16,16,16
+        ];
+
+        function calculate() {
+            const hp = parseInt(document.getElementById('hp').value);
+            const mp = parseInt(document.getElementById('mp').value);
+            const magicGuardLevel = parseInt(document.getElementById('magicGuardLevel').value);
+            const magicShieldLevel = parseInt(document.getElementById('magicShieldLevel').value);
+
+            if (!hp || !mp || !magicGuardLevel || !magicShieldLevel) {
+                alert("請填寫所有欄位");
+                return;
+            }
+
+            const guardRate = magicGuardRates[magicGuardLevel];
+            const mpThreshold = Math.floor(mp * 0.1); // 理論設為10%
+            const shieldMP = magicShieldMP[magicShieldLevel];
+
+            let result = `🔢 自動補 MP 閾值：${mpThreshold} MP<br>`;
+            result += `🛡️ 魔心防禦比率：${Math.round(guardRate * 100)}%<br>`;
+            result += `💧 魔力之盾耗 MP：${shieldMP} 每次施放<br>`;
+            result += `📌 備註：建議保持 MP 約 ${Math.round(mp * 0.1)}~${Math.round(mp * 0.12)}，用於魔心吸收。<br>`;
+            result += `🔍 推薦補品搭配：依據補量與價格選擇紅豆刨冰、礦泉水或藍水。`;
+
+            const resultDiv = document.getElementById("result");
+            resultDiv.innerHTML = result;
+            resultDiv.style.display = "block";
+        }
+    </script>
+</body>
+</html>
