@@ -3,87 +3,42 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>楓之谷補水效率助手（Artale版）｜法師（火毒）</title>
-  <style>
-    :root {
-      --bg: #0b1020;
-      --text: #ffffff;
-      --accent: #ff9800;
-    }
-    body {
-      background-color: var(--bg);
-      color: var(--text);
-      font-family: Arial, sans-serif;
-      padding: 20px;
-    }
-    h1 {
-      color: var(--accent);
-    }
-    label {
-      display: block;
-      margin-top: 10px;
-    }
-    input, select, button {
-      margin-top: 5px;
-      padding: 5px;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid #666;
-      padding: 8px;
-      text-align: center;
-    }
-    th {
-      background-color: #333;
-    }
-  </style>
+  <title>楓之谷補水效率助手（Artale版）｜火毒法師</title>
+  <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
-  <h1>楓之谷補水效率助手（Artale版）｜火毒法師</h1>
-  <p>輸入角色數據與補給品，計算 HP/MP 補水效率。</p>
-  <form id="calcForm">
-    <label>角色最大 HP：<input type="number" id="maxHP" required></label>
-    <label>角色最大 MP：<input type="number" id="maxMP" required></label>
-    <label>補給品：
-      <select id="potion">
-        <option value="red,300,50">紅水 - 回復 300 HP（50 楓幣）</option>
-        <option value="blue,300,150">藍水 - 回復 300 MP（150 楓幣）</option>
-        <option value="manaElixir,1000,500">魔力藥水 - 回復 1000 MP（500 楓幣）</option>
-      </select>
-    </label>
-    <button type="button" onclick="calculate()">計算</button>
-  </form>
-  <table id="resultTable">
-    <thead>
-      <tr>
-        <th>補給品</th>
-        <th>恢復量</th>
-        <th>價格</th>
-        <th>效率（恢復量/楓幣）</th>
-      </tr>
-    </thead>
-    <tbody></tbody>
-  </table>
-  <script>
-    function calculate() {
-      const potionData = document.getElementById("potion").value.split(",");
-      const name = potionData[0];
-      const recover = parseInt(potionData[1]);
-      const cost = parseInt(potionData[2]);
-      const efficiency = (recover / cost).toFixed(2);
-
-      const tbody = document.getElementById("resultTable").querySelector("tbody");
-      tbody.innerHTML = `<tr>
-        <td>${name}</td>
-        <td>${recover}</td>
-        <td>${cost}</td>
-        <td>${efficiency}</td>
-      </tr>`;
-    }
-  </script>
+  <header>
+    <h1>楓之谷補水效率助手（Artale版）｜火毒法師</h1>
+  </header>
+  <main>
+    <p>輸入角色數據與補給品，計算 HP/MP 補水效率。</p>
+    <form id="calcForm">
+      <label>角色最大 HP：<input type="number" id="maxHP" required></label>
+      <label>角色最大 MP：<input type="number" id="maxMP" required></label>
+      <label>補給品：
+        <select id="potion">
+          <option value="紅水,300,50">紅水 - 回復 300 HP（50 楓幣）</option>
+          <option value="藍水,300,150">藍水 - 回復 300 MP（150 楓幣）</option>
+          <option value="魔力藥水,1000,500">魔力藥水 - 回復 1000 MP（500 楓幣）</option>
+        </select>
+      </label>
+      <button type="button" onclick="calculate()">計算</button>
+    </form>
+    <table id="resultTable">
+      <thead>
+        <tr>
+          <th>補給品</th>
+          <th>恢復量</th>
+          <th>價格</th>
+          <th>效率（恢復量/楓幣）</th>
+        </tr>
+      </thead>
+      <tbody></tbody>
+    </table>
+  </main>
+  <footer>
+    <p>© 2025 Artale. 遊戲數據僅供參考，與 NEXON 無關。</p>
+  </footer>
+  <script src="js/main.js"></script>
 </body>
 </html>
